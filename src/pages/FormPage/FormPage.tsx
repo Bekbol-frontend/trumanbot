@@ -1,5 +1,7 @@
+import { useTelegram } from "@/hooks/useTelegram";
 import type { FormProps } from "antd";
 import { Form, Input, Select } from "antd";
+import { useEffect } from "react";
 
 type FieldType = {
   country?: string;
@@ -7,12 +9,23 @@ type FieldType = {
   subject?: string;
 };
 
-const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
-  console.log("Success:", values);
-};
-
 function FormPage() {
   const [form] = Form.useForm();
+  const matchForm = Form.useWatch([], form);
+
+  const { tg } = useTelegram();
+
+  const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
+    console.log("Success:", values);
+  };
+
+  useEffect(() => {
+    if (!form.getFieldValue("country") || !form.getFieldValue("street")) {
+      tg.MainButton.hide();
+    } else {
+      tg.MainButton.show();
+    }
+  }, [tg, matchForm, form]);
 
   return (
     <div
