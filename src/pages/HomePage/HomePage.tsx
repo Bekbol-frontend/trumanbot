@@ -1,7 +1,8 @@
-import { Button, Card, Col, Row, Typography } from "antd";
+import { Button, Card, Col, Flex, Row, Typography } from "antd";
 import styles from "./HomePage.module.css";
 import { useCallback, useState } from "react";
 import { useTelegram } from "@/hooks/useTelegram";
+import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 
 const { Title, Paragraph } = Typography;
 
@@ -130,9 +131,16 @@ function HomePage() {
               <Paragraph>Цена: {product.price}</Paragraph>
               <Paragraph>Описание: {product.desc}</Paragraph>
 
-              <Button onClick={() => onClickAdd(product)}>
-                добавить в корзину
-              </Button>
+              <Flex gap={5}>
+                <Button
+                  onClick={() => onClickAdd(product)}
+                  icon={<PlusOutlined />}
+                />
+                <Button
+                  onClick={() => onClickAdd(product)}
+                  icon={<DeleteOutlined />}
+                />
+              </Flex>
             </Card>
           </Col>
         ))}
