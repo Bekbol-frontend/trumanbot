@@ -1,5 +1,4 @@
 import { useTelegram } from "@/hooks/useTelegram";
-import type { FormProps } from "antd";
 import { Form, Input, Select } from "antd";
 import { useEffect } from "react";
 
@@ -15,9 +14,16 @@ function FormPage() {
 
   const { tg } = useTelegram();
 
-  const onFinish: FormProps<FieldType>["onFinish"] = (values) => {
-    console.log("Success:", values);
-  };
+  useEffect(() => {
+    const callback = () => {
+      tg.sendData(matchForm);
+    };
+    tg.onEvent("mainButtonClicked", callback);
+
+    return () => {
+      tg.offEvent("mainButtonClicked", callback);
+    };
+  }, [tg, matchForm]);
 
   useEffect(() => {
     if (!form.getFieldValue("country") || !form.getFieldValue("street")) {
@@ -45,7 +51,6 @@ function FormPage() {
         initialValues={{
           subject: "physical",
         }}
-        onFinish={onFinish}
         autoComplete="off"
         layout="vertical"
       >
@@ -62,7 +67,7 @@ function FormPage() {
           name="street"
           rules={[{ required: true, message: "Please input your street!" }]}
         >
-          <Input.Password />
+          <Input />
         </Form.Item>
 
         <Form.Item<FieldType>
