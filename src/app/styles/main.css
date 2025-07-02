@@ -1,0 +1,16 @@
+@import "./var.css";
+
+body {
+  font-family: var(--font-roboto) !important;
+  height: 100vh;
+  background-color: var(--tg-theme-bg-color) !important;
+  color: var(--tg-theme-text-color) !important;
+}
+
+#root {
+  height: 100%;
+}
+
+.layout {
+  min-height: 100%;
+}
