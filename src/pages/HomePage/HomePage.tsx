@@ -76,7 +76,7 @@ function HomePage() {
     <div className={styles.homePage}>
       <Row gutter={[10, 10]}>
         {products.map((product) => (
-          <Col span={6} key={product.id}>
+          <Col span={12} key={product.id}>
             <Card
               key={product.id}
               hoverable
