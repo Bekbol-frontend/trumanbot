@@ -16,7 +16,7 @@ function FormPage() {
 
   useEffect(() => {
     const callback = () => {
-      tg.sendData(matchForm);
+      tg.sendData(JSON.stringify(matchForm));
     };
     tg.onEvent("mainButtonClicked", callback);
 
