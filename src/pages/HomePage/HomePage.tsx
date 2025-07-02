@@ -4,7 +4,6 @@ import { useCallback, useState } from "react";
 import { useTelegram } from "@/hooks/useTelegram";
 
 const { Title, Paragraph } = Typography;
-const { Meta } = Card;
 
 interface IProduct {
   id: number;
@@ -113,6 +112,7 @@ function HomePage() {
 
   return (
     <div className={styles.homePage}>
+      <h1>All price: {returnedTotalPrice(addedItems)}</h1>
       <Row gutter={[10, 10]}>
         {products.map((product) => (
           <Col span={12} key={product.id}>
