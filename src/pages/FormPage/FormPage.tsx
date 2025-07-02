@@ -27,6 +27,12 @@ function FormPage() {
     }
   }, [tg, matchForm, form]);
 
+  useEffect(() => {
+    tg.MainButton.setParams({
+      text: "Отправить",
+    });
+  }, [tg]);
+
   return (
     <div
       style={{
