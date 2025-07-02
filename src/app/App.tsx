@@ -20,7 +20,6 @@ function App() {
       theme={{
         token: {
           fontFamily: "var(--font-roboto)",
-          colorText: "var(--tg-theme-text-color)",
         },
       }}
     >
