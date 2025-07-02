@@ -111,6 +111,14 @@ function HomePage() {
     [addedItems, tg]
   );
 
+  const onClickRemove = useCallback(
+    (product: IProduct) => {
+      const filterProducts = addedItems.filter((el) => el.id !== product.id);
+      setAddedItems(filterProducts);
+    },
+    [addedItems]
+  );
+
   return (
     <div className={styles.homePage}>
       <h1>All price: {returnedTotalPrice(addedItems)}</h1>
@@ -137,7 +145,7 @@ function HomePage() {
                   icon={<PlusOutlined />}
                 />
                 <Button
-                  onClick={() => onClickAdd(product)}
+                  onClick={() => onClickRemove(product)}
                   icon={<DeleteOutlined />}
                 />
               </Flex>
