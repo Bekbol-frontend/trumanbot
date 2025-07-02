@@ -1,10 +1,20 @@
-import { Card, Col, Row, Typography } from "antd";
+import { Button, Card, Col, Row, Typography } from "antd";
 import styles from "./HomePage.module.css";
+import { useCallback, useState } from "react";
+import { useTelegram } from "@/hooks/useTelegram";
 
 const { Title, Paragraph } = Typography;
 const { Meta } = Card;
 
-const products = [
+interface IProduct {
+  id: number;
+  title: string;
+  price: number;
+  desc: string;
+  imgUrl: string;
+}
+
+const products: IProduct[] = [
   {
     id: 1,
     title: "Джинсы",
@@ -71,7 +81,36 @@ const products = [
   },
 ];
 
+const returnedTotalPrice = (array: IProduct[]) => {
+  return array.reduce((acc, el) => acc + el.price, 0);
+};
+
 function HomePage() {
+  const [addedItems, setAddedItems] = useState<IProduct[]>([]);
+
+  const { tg } = useTelegram();
+
+  const onClickAdd = useCallback(
+    (product: IProduct) => {
+      const findProduct = addedItems.find((el) => el.id === product.id);
+
+      if (!findProduct) {
+        setAddedItems((prev) => [...prev, product]);
+      }
+
+      if (!addedItems.length) {
+        tg.MainButton.hide();
+      } else {
+        tg.MainButton.show();
+
+        tg.MainButton.setParams({
+          text: `Купить ${returnedTotalPrice(addedItems)}`,
+        });
+      }
+    },
+    [addedItems, tg]
+  );
+
   return (
     <div className={styles.homePage}>
       <Row gutter={[10, 10]}>
@@ -90,6 +129,10 @@ function HomePage() {
               <Title level={5}>Название: {product.title}</Title>
               <Paragraph>Цена: {product.price}</Paragraph>
               <Paragraph>Описание: {product.desc}</Paragraph>
+
+              <Button onClick={() => onClickAdd(product)}>
+                добавить в корзину
+              </Button>
               <Meta title="Instagram" description="www.instagram.com" />
             </Card>
           </Col>
