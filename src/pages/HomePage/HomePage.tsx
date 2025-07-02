@@ -133,7 +133,6 @@ function HomePage() {
               <Button onClick={() => onClickAdd(product)}>
                 добавить в корзину
               </Button>
-              <Meta title="Instagram" description="www.instagram.com" />
             </Card>
           </Col>
         ))}
